@@ -1,0 +1,10 @@
+/* src/styles/colors.css */
+:root {
+    --primary-color: rgb(20 0 156);
+    --text: #070606;
+    /* Add more colors as needed */
+  }
+
+  a.global-link{
+    text-decoration: none;
+  }
