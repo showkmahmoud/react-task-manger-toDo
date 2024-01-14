@@ -1,0 +1,7 @@
+.custom-alert{
+    position: absolute !important;
+    right: 35px;
+    z-index: 111;
+    width: 15%;
+    text-align: center;
+}
