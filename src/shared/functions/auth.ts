@@ -26,8 +26,8 @@ export const onRegister = (data: {
   fName: string;
   lName: string;
 }): any => {
-  return axios.post(`${api}${APIName.login}`, {
-    userName: data.userName,
+  return axios.post(`${api}${APIName.register}`, {
+    username: data.userName,
     email: data.email,
     password: data.password,
     fName: data.fName,

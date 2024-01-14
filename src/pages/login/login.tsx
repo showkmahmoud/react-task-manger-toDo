@@ -36,7 +36,6 @@ const Login: FC<PropsWithChildren<ILoginModal>> = ({ onSubmitForm }) => {
         password: values.password,
       });
       // Handle the API response as needed
-      console.log(response);
       // Assume there is a success condition in your API response
       if (response.data.success) {
         // Show success notification
