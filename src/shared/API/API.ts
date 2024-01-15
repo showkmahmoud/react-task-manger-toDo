@@ -4,5 +4,6 @@ export const APIName = {
     checkEmail:'auth/check-email',
     register:'auth/register',
     login:'auth/login',
-    addTask:'tasks/add'
+    addTask:'tasks/add',
+    getAllTasks:'tasks/get/all',
 }

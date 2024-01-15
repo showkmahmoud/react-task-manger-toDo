@@ -3,5 +3,4 @@ export interface ITask{
     description?:string;
     title:string;
     status:string;
-    Authorization?:string | null
 }
