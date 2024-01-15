@@ -13,8 +13,8 @@ function App() {
       <NavComp/>
        <div className="container">
         <Routes>
-        <Route index Component={Home} />
-        <Route path="/login" Component={Login} />
+        <Route  Component={Home} />
+        <Route index path="/login" Component={Login} />
         <Route path="/signUp" Component={SignUp} />
         <Route path="*" Component={notFound} />
       </Routes>

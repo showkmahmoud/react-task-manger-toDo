@@ -33,7 +33,7 @@ const NavComp = (args: any) => {
                 <Link to="/login">Login</Link>
               </NavItem>
               <NavItem className= {isActiveLink('/signUp') ? 'active' : 'nav-item'} >
-                <Link to="/signUp">signUp</Link>
+                <Link to="/signUp">sign Up</Link>
               </NavItem>
             </Nav>
           </Collapse>
