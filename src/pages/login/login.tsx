@@ -43,6 +43,10 @@ const Login: FC<PropsWithChildren<ILoginModal>> = ({ onSubmitForm }) => {
         navigate("/home");
         // Show success notification
         onShowNotification("success", "Login successful!");
+        onSubmitForm({
+          status:'success',
+          message:"Login successful!"
+        })
       } else {
         // Handle API response errors, if any
         // You might want to set specific errors in the form for user feedback

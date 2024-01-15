@@ -10,7 +10,7 @@ import {
 } from "../../shared/functions/auth";
 import { useNavigate } from "react-router-dom";
 
-const SignUp: FC<PropsWithChildren<any>> = () => {
+const SignUp: FC<PropsWithChildren<any>> = ({onSubmitForm}) => {
   // initialNotification
   const initialNotification = {
     status: "",
@@ -104,6 +104,10 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
       if (response.data.success) {
         // Show success notification
         onShowNotification("success", response.data.message, true);
+        onSubmitForm({
+          status:'success',
+          message:"Registeration successful!"
+        })
         navigate("/");
       } else {
         // Handle API response errors, if any
