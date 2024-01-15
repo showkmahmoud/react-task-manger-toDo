@@ -19,11 +19,11 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
   };
   const [showNotification, setShowNotification] = useState(initialNotification);
   const navigate = useNavigate();
-  const onShowNotification = (status: string, message: string) => {
+  const onShowNotification = (status: string, message: string,show?:boolean) => {
     setShowNotification({
       message: message,
       status: status,
-      show: status ? true : false,
+      show: show ? show : (status ? true : false),
     });
   };
   const [suggetionNames, setSuggetionNames] = useState([]);
@@ -43,39 +43,37 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
               if (response.data.available) {
                 onShowNotification("", "");
                 setSuggetionNames([]);
-                console.log(44)
                 return true; // Username is available
-              } else {
-                // Username is not available, set suggestions and return false
-                console.log('first')
-                return false;
               }
             } catch (error:any) {
-              console.log('55')
               // Handle unexpected error during validation
               onShowNotification("danger", "User is Registered Before");
               setSuggetionNames(error.response.data.suggestedUsernames);
             return false;
             }
           }
-          return false; // If the value is empty, don't perform validation
+          return true; // If the value is empty, don't perform validation
         }
       ),
     userEmail: Yup.string()
       .email("this mail is not valid")
       .required("Email is required")
       .test(
-        "User is not registered",
+        "email-Unique",
         "Email is not available",
         async function (value) {
-          if (value) {
+          if (value !== formik.values.userEmail) {
             try {
-              // Make an Axios request to check the availability of the username
-              const response = await onCheckUserEmail(formik.values.userEmail);
+              const response = await onCheckUserEmail(value);
               // Assuming the response contains a boolean field 'available'
-              return response.data.available;
-            } catch (error) {
-              return false; // If there is an error, consider the username as not available
+              if (response.data.available) {
+                onShowNotification("", "");
+                return true; 
+              }
+            } catch (error:any) {
+              // Handle unexpected error during validation
+              onShowNotification("danger", error.response.data.message);
+            return false;
             }
           }
           return true; // If the value is empty, don't perform validation
@@ -102,12 +100,11 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
         lName: values.lName,
       });
       // Handle the API response as needed
-      console.log(response);
       // Assume there is a success condition in your API response
       if (response.data.success) {
         // Show success notification
-        onShowNotification("success", "Register successful!");
-        navigate("/login");
+        onShowNotification("success", response.data.message,true);
+        navigate("/");
       } else {
         // Handle API response errors, if any
         // You might want to set specific errors in the form for user feedback
@@ -120,11 +117,6 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
       // Handle API request error
       onShowNotification("danger", "Error during Register. Please try again.");
     }
-    setShowNotification({
-      message: "",
-      show: false,
-      status: "",
-    });
   };
 
   // take from me => initialValue, validationSchema and the onsubmit function
@@ -145,12 +137,8 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
     <>
       {/* notification */}
       {showNotification.show && 
-      formik.errors.userName &&
-      formik.errors.password &&
-      formik.errors.userEmail &&
-      formik.errors.fName &&
-      formik.errors.lName &&
       (
+        
         <Alert
           onClose={() =>
             setShowNotification({ message: "", status: "", show: false })

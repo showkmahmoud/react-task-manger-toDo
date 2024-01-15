@@ -1,7 +1,7 @@
 .custom-alert,
 .danger-alert,
 .sucess-alert{
-    position: absolute !important;
+    position: fixed !important;
     right: 35px;
     z-index: 111;
     width: 15%;

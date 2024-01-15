@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from "./pages/login/Login";
+import Login from "./pages/login/login";
 import Home from "./pages/Home/Home";
 import NavComp from "./core/nav/nav";
 import notFound from "./pages/Home/not-found/notFound";
@@ -13,8 +13,8 @@ function App() {
       <NavComp/>
        <div className="container">
         <Routes>
-        <Route  Component={Home} />
-        <Route index path="/login" Component={Login} />
+        <Route path="/home" Component={Home} />
+        <Route index path="/" Component={Login} />
         <Route path="/signUp" Component={SignUp} />
         <Route path="*" Component={notFound} />
       </Routes>

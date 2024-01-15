@@ -26,11 +26,11 @@ const NavComp = (args: any) => {
           <NavbarToggler className="toggle-btn" onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mx-auto d-flex justify-content-between nav-items-wrapper" navbar>
-              <NavItem  className= {isActiveLink('/') ? 'active' : 'nav-item'} >
-                <Link to="/">Home</Link>
+              <NavItem  className= {isActiveLink('/home') ? 'active' : 'nav-item'} >
+                <Link to="/home">Home</Link>
               </NavItem>
-              <NavItem  className= {isActiveLink('/login') ? 'active' : 'nav-item'}>
-                <Link to="/login">Login</Link>
+              <NavItem  className= {isActiveLink('/') ? 'active' : 'nav-item'}>
+                <Link to="/">Login</Link>
               </NavItem>
               <NavItem className= {isActiveLink('/signUp') ? 'active' : 'nav-item'} >
                 <Link to="/signUp">sign Up</Link>
