@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import "./Login.css";
 import {  onLogin,
 } from "../../shared/functions/auth";
+import { useNavigate } from "react-router";
 interface ILoginModal {
   onSubmitForm?: any;
 }
@@ -23,6 +24,7 @@ const Login: FC<PropsWithChildren<ILoginModal>> = ({ onSubmitForm }) => {
       show: true,
     });
   };
+  const navigate = useNavigate()
   // Define your validation schema using Yup:
   const validationSchema: any = Yup.object().shape({
     userName: Yup.string().required("User name is required"),
@@ -38,6 +40,7 @@ const Login: FC<PropsWithChildren<ILoginModal>> = ({ onSubmitForm }) => {
       // Handle the API response as needed
       // Assume there is a success condition in your API response
       if (response.data.success) {
+        navigate("/home");
         // Show success notification
         onShowNotification("success", "Login successful!");
       } else {
@@ -47,8 +50,6 @@ const Login: FC<PropsWithChildren<ILoginModal>> = ({ onSubmitForm }) => {
       }
     } catch (error) {
       // Handle API request error
-      console.error(error);
-
       // Show error notification
       onShowNotification("danger", "Error during login. Please try again.");
     }
@@ -67,22 +68,25 @@ const Login: FC<PropsWithChildren<ILoginModal>> = ({ onSubmitForm }) => {
     <>
       {showNotification.show && (
         <Alert
-          variant={showNotification.status}
-          onClose={() =>
-            setShowNotification({ message: "", status: "", show: false })
-          }
-          className="custom-alert"
-          dismissible={showNotification.show.toString()}
-        >
-          {showNotification.message}
-        </Alert>
+        onClose={() =>
+          setShowNotification({ message: "", status: "", show: false })
+        }
+        className={
+          showNotification.status === "danger"
+            ? "alert custom-alert alert-danger"
+            : "alert custom-alert alert-success"
+        }
+        dismissible={showNotification.show.toString()}
+      >
+        {showNotification.message}
+      </Alert>
       )}
 
       <form className="px-4 py-5 mt-5" onSubmit={formik.handleSubmit}>
         {/* user name */}
         <FormGroup>
           <Label for="UserName" className="text-capitalize ">
-            user name
+            user name/ email
           </Label>
           <Input
             id="UserName"

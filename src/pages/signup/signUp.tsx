@@ -19,11 +19,15 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
   };
   const [showNotification, setShowNotification] = useState(initialNotification);
   const navigate = useNavigate();
-  const onShowNotification = (status: string, message: string,show?:boolean) => {
+  const onShowNotification = (
+    status: string,
+    message: string,
+    show?: boolean
+  ) => {
     setShowNotification({
       message: message,
       status: status,
-      show: show ? show : (status ? true : false),
+      show: show ? show : status ? true : false,
     });
   };
   const [suggetionNames, setSuggetionNames] = useState([]);
@@ -45,11 +49,11 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
                 setSuggetionNames([]);
                 return true; // Username is available
               }
-            } catch (error:any) {
+            } catch (error: any) {
               // Handle unexpected error during validation
               onShowNotification("danger", "User is Registered Before");
               setSuggetionNames(error.response.data.suggestedUsernames);
-            return false;
+              return false;
             }
           }
           return true; // If the value is empty, don't perform validation
@@ -58,27 +62,23 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
     userEmail: Yup.string()
       .email("this mail is not valid")
       .required("Email is required")
-      .test(
-        "email-Unique",
-        "Email is not available",
-        async function (value) {
-          if (value !== formik.values.userEmail) {
-            try {
-              const response = await onCheckUserEmail(value);
-              // Assuming the response contains a boolean field 'available'
-              if (response.data.available) {
-                onShowNotification("", "");
-                return true; 
-              }
-            } catch (error:any) {
-              // Handle unexpected error during validation
-              onShowNotification("danger", error.response.data.message);
-            return false;
+      .test("email-Unique", "Email is not available", async function (value) {
+        if (value !== formik.values.userEmail) {
+          try {
+            const response = await onCheckUserEmail(value);
+            // Assuming the response contains a boolean field 'available'
+            if (response.data.available) {
+              onShowNotification("", "");
+              return true;
             }
+          } catch (error: any) {
+            // Handle unexpected error during validation
+            onShowNotification("danger", error.response.data.message);
+            return false;
           }
-          return true; // If the value is empty, don't perform validation
         }
-      ),
+        return true; // If the value is empty, don't perform validation
+      }),
     password: Yup.string().required("password is required"),
     fName: Yup.string().required("First Name is required"),
     lName: Yup.string().required("Last Name is required"),
@@ -103,7 +103,7 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
       // Assume there is a success condition in your API response
       if (response.data.success) {
         // Show success notification
-        onShowNotification("success", response.data.message,true);
+        onShowNotification("success", response.data.message, true);
         navigate("/");
       } else {
         // Handle API response errors, if any
@@ -136,9 +136,7 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
   return (
     <>
       {/* notification */}
-      {showNotification.show && 
-      (
-        
+      {showNotification.show && (
         <Alert
           onClose={() =>
             setShowNotification({ message: "", status: "", show: false })
@@ -172,16 +170,17 @@ const SignUp: FC<PropsWithChildren<any>> = () => {
               {formik.errors.userName}
             </div>
           )}
-          {suggetionNames && (
-              suggetionNames.map((item, index) => (
-                <div onClick={()=>formik.setFieldValue("userName", item)} key={index} className="error-message text-danger">
-                you can use: 
+          {suggetionNames &&
+            suggetionNames.map((item, index) => (
+              <div
+                onClick={() => formik.setFieldValue("userName", item)}
+                key={index}
+                className="error-message text-danger"
+              >
+                you can use:
                 <span className="suggest-name">{item}</span>
-                
               </div>
-              
-              ))
-          )}
+            ))}
         </FormGroup>
         {/* User Email */}
         <FormGroup>

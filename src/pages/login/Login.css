@@ -1,7 +1,20 @@
-.custom-alert{
-    position: absolute !important;
+.custom-alert,
+.danger-alert,
+.sucess-alert{
+    position: fixed !important;
     right: 35px;
     z-index: 111;
     width: 15%;
     text-align: center;
+}
+
+.sucess-alert{
+    background: #d1e7dd;
+    color: #58151c;
+    border: solid 1px #f1aeb5;
+}
+.danger-alert{
+    color: #0a3622;
+    background: #f8d7da;
+    border: solid 1px #a3cfbb;
 }
