@@ -3,5 +3,6 @@ export const APIName = {
     checkUserName:'auth/check-username',
     checkEmail:'auth/check-email',
     register:'auth/register',
-    login:'auth/login'
+    login:'auth/login',
+    addTask:'tasks/add'
 }

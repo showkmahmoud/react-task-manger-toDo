@@ -6,6 +6,7 @@ import "./Login.css";
 import {  onLogin,
 } from "../../shared/functions/auth";
 import { useNavigate } from "react-router";
+import { LOCAL_STORAGE_TOKEN } from "../../shared/enums/localStorageToken";
 interface ILoginModal {
   onSubmitForm?: any;
 }
@@ -47,6 +48,7 @@ const Login: FC<PropsWithChildren<ILoginModal>> = ({ onSubmitForm }) => {
           status:'success',
           message:"Login successful!"
         })
+        localStorage.setItem(LOCAL_STORAGE_TOKEN.userToken,response.data.token)
       } else {
         // Handle API response errors, if any
         // You might want to set specific errors in the form for user feedback
